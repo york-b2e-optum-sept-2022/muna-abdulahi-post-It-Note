@@ -1,10 +1,12 @@
-<button (click)="newPost()"> Add New Contact</button>
+<button class="btn btn-success" type="button"
+        (click)="newPost()"> Add New Post-It
+</button>
 
 <app-post-it-notes
-  *ngIf="isAddingNew === false"
+  *ngIf="!isAddingNew "
 ></app-post-it-notes>
 
 <app-add-post-it
-*ngIf="isAddingNew === true"
+  *ngIf="isAddingNew"
 ></app-add-post-it>
 

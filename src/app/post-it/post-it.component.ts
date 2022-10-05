@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {IPostIt} from "../interfaces/IPostIt";
+import {DataService} from "../data.service";
 
 @Component({
   selector: 'app-post-it',
@@ -7,12 +8,34 @@ import {IPostIt} from "../interfaces/IPostIt";
   styleUrls: ['./post-it.component.css']
 })
 export class PostItComponent implements OnInit {
-//isUpdating: boolean = false;
-//localPosit!: IPostIt;
+  @Input() postItListInfo!: IPostIt;
 
-  constructor() { }
+
+
+  constructor(private dataServer:DataService) {
+
+  }
 
   ngOnInit(): void {
   }
 
-}
+  onDeleteClick() {
+this.dataServer.onDeleteClick(this.postItListInfo.id);
+  }
+
+  onUpdateClick() {
+    this.dataServer.onUpdate(this.postItListInfo.input,this.postItListInfo.id);
+
+  }
+
+  onSaveClick() {
+
+  }
+
+  onCancelClick() {
+
+  }
+  }
+
+
+

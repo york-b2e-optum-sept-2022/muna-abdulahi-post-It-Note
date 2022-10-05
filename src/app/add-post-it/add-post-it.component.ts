@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {IPostIt} from "../interfaces/IPostIt";
 import {DataService} from "../data.service";
 
@@ -7,16 +7,19 @@ import {DataService} from "../data.service";
   templateUrl: './add-post-it.component.html',
   styleUrls: ['./add-post-it.component.css']
 })
-export class AddPostItComponent implements OnInit {
-postIt: IPostIt[]
+export class AddPostItComponent {
+
+
+  postIt: IPostIt = {
+    date: new Date(),
+    input: "",
+    id: "",
+  }
 
   constructor(private dataService: DataService) {
- this.postIt = this.dataService.postItList
-    console.log(this.postIt)
   }
 
-  ngOnInit(): void {
+  onSubmitPost() {
+    this.dataService.onSubmitPost(this.postIt)
   }
-
-
 }

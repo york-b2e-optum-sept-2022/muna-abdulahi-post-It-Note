@@ -1,5 +1,7 @@
-<div>
 
-  <textarea></textarea>
+  <textarea
+    [(ngModel)]="postIt.input">
+  </textarea>
+<button (click)="onSubmitPost()">Submit</button>
 
-</div>
+

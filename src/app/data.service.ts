@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {IPostIt} from "./interfaces/IPostIt";
 import {Subject} from "rxjs";
+import { v4 as uuid } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -8,29 +9,56 @@ import {Subject} from "rxjs";
 export class DataService {
 
   private isAddingNew: boolean = false;
-  $isAddingNew = new Subject<boolean> ();
+  $isAddingNew = new Subject<boolean>();
 
 
-  postItList: IPostIt[] = [
-    {
-      id: '123',
-      input: 'Need to grab groceries',
-      date: new Date(),
-    },
-
-    {
-      id: '123',
-      input: 'workout st 6pm',
-      date: new Date(),
-    }
-  ];
+  postItList: IPostIt[] = []
   $postItList = new Subject<IPostIt[]>();
 
-//when the button is clicked, true is stated and updated to app.ts
+
   createNewPostIt() {
     this.isAddingNew = true
     this.$isAddingNew.next(this.isAddingNew)
 
+  }
+
+  onSubmitPost(input: IPostIt) {
+
+    this.postItList.push(input)
+
+    if (input.id === '') {
+      input.id = uuid();
+      console.log(input)
+
+
+      this.isAddingNew = false
+      this.$isAddingNew.next(this.isAddingNew)
+
+
+      this.$postItList.next(this.postItList)
+    }
+
+    }
+
+  onDeleteClick(id: string) {
+    this.postItList = this.postItList.filter(
+      input => input.id !== id
+    );
+    this.$postItList.next(this.postItList)
+  }
+
+  onUpdate( input:string, id:string) {
+    const postUpdate = this.postItList.find (
+      postIt => postIt.id === id
+    );
+    if (postUpdate === undefined) {
+      console.error('its not working');
+      return;
+    }
+    postUpdate.input =  input
+    console.log(input)
+
+
+  }
 }
 
-}
